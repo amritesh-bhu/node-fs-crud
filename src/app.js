@@ -1,5 +1,5 @@
 import http from 'http'
-import { writeContentToFileUsingCallback } from './routes/write-file.js'
+import { writeContentToFileUsingCallback, writeContentToFileUsingPromise } from './routes/write-file.js'
 
 
 
@@ -7,7 +7,6 @@ const httpServer = http.createServer((req, res) => {
 
     const { method, url } = req
     if (method === "GET" && url == '/writefile') {
-        // console.log("getting the request from postman client!!")
         let body = ''
         req.on('data', chunk => {
             body += chunk.toString()
@@ -24,9 +23,9 @@ const httpServer = http.createServer((req, res) => {
             body += chunk.toString()
         })
         req.on('end', () => {
-            console.log("consoling the buffer data", body)
             const jsonData = JSON.parse(body)
-            res.end(JSON.stringify({ message: "writting file using promise!!", data: jsonData }))
+            const resData = writeContentToFileUsingPromise(jsonData)
+            res.end(JSON.stringify({ message: "writting file using promise!!", data: resData}))
         })
     }
 })
