@@ -5,9 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  http:
-    specifier: 0.0.1-security
-    version: 0.0.1-security
   nodemon:
     specifier: ^3.1.10
     version: 3.1.10
@@ -102,10 +99,6 @@ packages:
   /has-flag@3.0.0:
     resolution: {integrity: sha512-sKJf1+ceQBr4SMkvQnBDNDtf4TXpVhVGateu0t918bl30FnbE2m4vNLX+VWe/dpjlb+HugGYzW7uQXH98HPEYw==}
     engines: {node: '>=4'}
-    dev: false
-
-  /http@0.0.1-security:
-    resolution: {integrity: sha512-RnDvP10Ty9FxqOtPZuxtebw1j4L/WiqNMDtuc1YMH1XQm5TgDRaR1G9u8upL6KD1bXHSp9eSXo/ED+8Q7FAr+g==}
     dev: false
 
   /ignore-by-default@1.0.1:
