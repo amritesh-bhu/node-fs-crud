@@ -13,7 +13,6 @@ const httpServer = http.createServer((req, res) => {
             body += chunk.toString()
         })
         req.on('end', () => {
-            console.log("consoling buffer data", body)
             const jsonData = JSON.parse(body)
             const resData = writeContentToFile(jsonData)
             res.end(JSON.stringify({ message: resData }))
