@@ -3,22 +3,17 @@ import fs from "fs"
 const path = '/home/amritesh/workspace/filesystem-crud/files'
 
 // Writting a file using callback
-export const writeContentToFileUsingCallback = (jsonData) => {
+export const writeContentToFile = (jsonData) => {
 
     const { filename, content } = jsonData
-    console.log('content type ', content)
 
     const jsonString = JSON.stringify(content)
-    const writeFileAsync = (filename, callback) => {
-        fs.writeFile(`${path}/${filename}`, jsonString, (err, data) => {
-            if (err) callback(err, null)
-            callback(null, data)
+    const writeFileAsync = (filename) => {
+        fs.writeFile(`${path}/${filename}`, jsonString, (err) => {
+            if (err) console.log(err)
         })
     }
-
-    writeFileAsync(filename, (err) => {
-        if (err) console.error(err)
-    })
+    writeFileAsync(filename)
 
     return 'content has been added to the file successfully!!'
 }
@@ -27,16 +22,16 @@ export const writeContentToFileUsingPromise = async (jsonData) => {
     const { filename, content } = jsonData
 
     const jsonString = JSON.stringify(content)
-    const writeFileAsync = (filename, content) => {
+    const writeFileAsync = () => {
         return new Promise((resolve, reject) => {
-            fs.writeFile(`${path}/${filename}`, jsonString, (err, data) => {
+            fs.writeFile(`${path}/${filename}`, jsonString, (err) => {
                 if (err) reject(err)
-                resolve(data)
+                resolve("file created or overwritten successfully!!!")
             })
         })
     }
 
-    const data = await writeFileAsync(filename, content)
+    const data = await writeFileAsync()
     console.log(data)
-    return "data added to the file!!!"
+    return data
 }
