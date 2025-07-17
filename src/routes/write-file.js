@@ -1,8 +1,8 @@
 import fs from "fs"
+import { path } from "../utils/constant.js"
 
-const path = '/home/amritesh/workspace/filesystem-crud/files'
-
-// Writting a file using callback
+// Writting a file using callback, This approach is not feasible to return something from here because 
+// the function return the value before the file operation is done because file operation is an asynchronous operation.
 export const writeContentToFile = async (jsonData) => {
 
     const { filename, content } = jsonData

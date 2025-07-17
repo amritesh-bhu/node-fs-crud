@@ -1,16 +1,13 @@
 import fs from "fs"
-
-const fileName = '/home/amritesh/workspace/filesystem-crud/files/xyz.txt'
-
+import { abcFile, xyzFile } from "../utils/constant.js"
 
 // Writting a file using callback, This approach is not feasible to return something from here because 
 // the function return the value before the file operation is done because file operation is an asynchronous operation.
-
 export const appendingToFile = (jsonData) => {
 
     const jsonString = JSON.stringify(jsonData)
     const appendingToFileAsync = (callback) => {
-        fs.appendFile(fileName, `\n${jsonString}`, (err) => {
+        fs.appendFile(abcFile, `\n${jsonString}`, (err) => {
             if (err) callback(err, null)
             callback(null, "data appended to the file successfully!!")
         })
@@ -32,7 +29,7 @@ export const appendToFileUsingPromise = async (jsonData) => {
     console.log(jsonString)
     const appendToFileAsync = () => {
         return new Promise((resolve, reject) => {
-            fs.appendFile(fileName, jsonString, (err) => {
+            fs.appendFile(xyzFile, jsonString, (err) => {
                 if (err) reject(err)
                 resolve('appended content successfully!!!')
             })
