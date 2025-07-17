@@ -3,19 +3,24 @@ import fs from "fs"
 const path = '/home/amritesh/workspace/filesystem-crud/files'
 
 // Writting a file using callback
-export const writeContentToFile = (jsonData) => {
+export const writeContentToFile = async (jsonData) => {
 
     const { filename, content } = jsonData
 
     const jsonString = JSON.stringify(content)
-    const writeFileAsync = (filename) => {
+    const writeFileAsync = (callback) => {
         fs.writeFile(`${path}/${filename}`, jsonString, (err) => {
-            if (err) console.log(err)
+            if (err) callback(err, null)
+            callback(null, 'file created or if already exist overwritten!!')
         })
     }
-    writeFileAsync(filename)
 
-    return 'content has been added to the file successfully!!'
+    writeFileAsync((err, message) => {
+        console.log('message', message)
+        if (err) return console.error(err)
+    })
+
+    return 'file created or if already exist overwritten!!'
 }
 
 export const writeContentToFileUsingPromise = async (jsonData) => {
@@ -31,7 +36,11 @@ export const writeContentToFileUsingPromise = async (jsonData) => {
         })
     }
 
-    const data = await writeFileAsync()
-    console.log(data)
-    return data
+    try {
+        const data = await writeFileAsync()
+        return data
+    } catch (error) {
+        return console.error('write to file using asnc failed ', error)
+    }
+
 }
