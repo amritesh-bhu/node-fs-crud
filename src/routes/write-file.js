@@ -3,7 +3,7 @@ import { path } from "../utils/constant.js"
 
 // Writting a file using callback, This approach is not feasible to return something from here because 
 // the function return the value before the file operation is done because file operation is an asynchronous operation.
-export const writeContentToFile = async (jsonData) => {
+export const writeContentToFile = (jsonData) => {
 
     const { filename, content } = jsonData
 
@@ -17,7 +17,7 @@ export const writeContentToFile = async (jsonData) => {
 
     writeFileAsync((err, message) => {
         console.log('message', message)
-        if (err) return console.error(err)
+        if (err) console.error(err)
     })
 
     return 'file created or if already exist overwritten!!'

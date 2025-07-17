@@ -26,10 +26,9 @@ export const appendingToFile = (jsonData) => {
 
 export const appendToFileUsingPromise = async (jsonData) => {
     const jsonString = JSON.stringify(jsonData)
-    console.log(jsonString)
     const appendToFileAsync = () => {
         return new Promise((resolve, reject) => {
-            fs.appendFile(xyzFile, jsonString, (err) => {
+            fs.appendFile(xyzFile, `\n${jsonString}`, (err) => {
                 if (err) reject(err)
                 resolve('appended content successfully!!!')
             })
