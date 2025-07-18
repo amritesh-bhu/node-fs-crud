@@ -1,11 +1,11 @@
 import http from 'http'
 import { writeContentToFile, writeContentToFileUsingPromise } from './routes/write-file.js'
 import { appendingToFile, appendToFileUsingPromise } from './routes/append-to-file.js'
-import { readFromFile } from './routes/read-file.js'
+import { readFromFile, readFromFileUsingPromise } from './routes/read-file.js'
 
 
 
-const httpServer = http.createServer((req, res) => {
+const httpServer = http.createServer(async (req, res) => {
 
     const { method, url } = req
     if (method === "POST" && url == '/write-file') {
@@ -52,10 +52,15 @@ const httpServer = http.createServer((req, res) => {
         })
     } else if (method === "GET" && url == "/read-file") {
         const data = readFromFile()
-        req.on('end', () => {
-            console.log('============>>>>>>>>>>>>')
-            res.end(JSON.stringify({ message: data }))
-        })
+        res.end(JSON.stringify({ message: data }))
+    } else if (method === "GET" && url == "/read-file-async") {
+        const resData = await readFromFileUsingPromise()
+        res.end(JSON.stringify({ message: "Data from xyz file are : ", data: resData }))
+        req.on('error', err => {
+            console.error('Error:', err);
+            res.statusCode = 500;
+            res.end('Something went wrong');
+        });
     }
 })
 

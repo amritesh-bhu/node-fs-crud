@@ -1,9 +1,10 @@
 import fs from 'fs'
-import { abcFile } from '../utils/constant.js'
+import { abcFile, xyzFile } from '../utils/constant.js'
 
 // Writting a file using callback, This approach is not feasible to return something from here because 
 // the function return the value before the file operation is done because file operation is an asynchronous operation 
-// and you can't return the data you are reading from the file!!.
+// and you can't return the data you are reading from the file!!.you can return the data from here only 
+// when you are paasing res object to the route layer to sent back the data . 
 
 export const readFromFile = () => {
     const readingFromfileAsync = (callback) => {
@@ -25,4 +26,23 @@ export const readFromFile = () => {
     })
 
     return 'Data has been read successfully!!!'
+}
+
+
+export const readFromFileUsingPromise = async () => {
+    const readingFromfileAsync = () => {
+        return new Promise((resolve, reject) => {
+            fs.readFile(xyzFile, 'utf-8', (err, data) => {
+                if (err) reject(err)
+                resolve(data)
+            })
+        })
+    }
+
+    try {
+        const data = await readingFromfileAsync()
+        return data
+    } catch (err) {
+        return err
+    }
 }
