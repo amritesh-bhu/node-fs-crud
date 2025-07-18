@@ -2,6 +2,7 @@ import http from 'http'
 import { writeContentToFile, writeContentToFileUsingPromise } from './routes/write-file.js'
 import { appendingToFile, appendToFileUsingPromise } from './routes/append-to-file.js'
 import { readFromFile, readFromFileUsingPromise } from './routes/read-file.js'
+import { deleteTheFile, deleteTheFileUsingPromise } from './routes/delete-file.js'
 
 
 
@@ -56,6 +57,18 @@ const httpServer = http.createServer(async (req, res) => {
     } else if (method === "GET" && url == "/read-file-async") {
         const resData = await readFromFileUsingPromise()
         res.end(JSON.stringify({ message: "Data from xyz file are : ", data: resData }))
+        req.on('error', err => {
+            console.error('Error:', err);
+            res.statusCode = 500;
+            res.end('Something went wrong');
+        });
+    } else if (method === "DELETE" && url == "/delete-file") {
+        deleteTheFile()
+        res.end('File deleted successfully!!!')
+    }
+    else if (method === "DELETE" && url == "/delete-file-async") {
+        const msg = await deleteTheFileUsingPromise()
+        res.end(msg)
         req.on('error', err => {
             console.error('Error:', err);
             res.statusCode = 500;
